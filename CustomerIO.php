@@ -137,6 +137,7 @@ class CustomerIO {
         curl_setopt($session, CURLOPT_HTTPGET, 1);
         curl_setopt($session, CURLOPT_HEADER, false);
         curl_setopt($session, CURLOPT_RETURNTRANSFER, false);
+        curl_setopt($session, CURLOPT_VERBOSE, true);
         curl_setopt($session, CURLOPT_CUSTOMREQUEST, $requestType);
         curl_setopt($session, CURLOPT_VERBOSE, 1);
         curl_setopt($session, CURLOPT_POSTFIELDS, http_build_query($data));
