@@ -1,7 +1,4 @@
 <?php
-
-namespace Narsic\Customerio;
-
 class CustomerIO {
     var $errorMessage;
     var $errorCode;
@@ -91,16 +88,16 @@ class CustomerIO {
      * Edit user data.
      * 
      * @param integer $id   User id in your system
-     * @param array   $info User extra info, like first_name, plan_name
+     * @param array   $extraInfo User extra info, like first_name, plan_name
      */
-    function EditUser($id, $info=array()) {
+    function EditUser($id, $extraInfo=array()) {
         $url = $this->_apiUrl . $id;
 
         if (!is_array($extraInfo)) {
             throw new Exception('$extraInfo param must be an array');
         }
 
-        return $this->_callServer($url, $info, "PUT");
+        return $this->_callServer($url, $extraInfo, "PUT");
     }
 
     /**
@@ -139,7 +136,7 @@ class CustomerIO {
         curl_setopt($session, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($session, CURLOPT_HTTPGET, 1);
         curl_setopt($session, CURLOPT_HEADER, false);
-        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($session, CURLOPT_RETURNTRANSFER, false);
         curl_setopt($session, CURLOPT_CUSTOMREQUEST, $requestType);
         curl_setopt($session, CURLOPT_VERBOSE, 1);
         curl_setopt($session, CURLOPT_POSTFIELDS, http_build_query($data));
