@@ -103,23 +103,29 @@ class CustomerIO {
     /**
      * Trigger event.
      * 
-     * @param integer $id    User id in your system
-     * @param string  $name  Event name
-     * @param string  $value Event value, can be null
+     * @param integer  $id        User id in your system
+     * @param string   $name      Event name
+     * @param array   $extraInfo event extra info
+     * @param datetime $timestamp if event happend in the past
      */
-    function triggerEvent($id, $name, $value=null) {
+    function triggerEvent($id, $name, $extraInfo = array(), $timestamp = null) {
         $url = $this->_apiUrl . $id . '/events';
 
         if (!isset($name)) {
             throw new Exception('Event name can\t be null');
         }
 
-        $info = array('name' => $name);
-        if (isset($value)) {
-            $info['value'] = $value;
+        if (!is_array($extraInfo)) {
+            throw new Exception('$extraInfo param must be an array');
         }
 
-        return $this->_callServer($url, $info);
+        if(isset($extraInfo['name'])) {
+            throw new Exception('$extraInfo param must not contain the key name');
+        }
+
+        $extraInfo['name'] = $name;
+
+        return $this->_callServer($url, $extraInfo);
     }
 
     /**
