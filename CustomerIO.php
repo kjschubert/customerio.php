@@ -123,9 +123,15 @@ class CustomerIO {
             throw new Exception('$extraInfo param must not contain the key name');
         }
 
-        $extraInfo['name'] = $name;
+        $data = array('name' => $name);
+        if(count($extraInfo) > 0) {
+            $data['data'] = $extraInfo;
+        }
+        if($timestamp != null) {
+            $data['timestamp'] = $timestamp;
+        }
 
-        return $this->_callServer($url, $extraInfo);
+        return $this->_callServer($url, $data);
     }
 
     /**
